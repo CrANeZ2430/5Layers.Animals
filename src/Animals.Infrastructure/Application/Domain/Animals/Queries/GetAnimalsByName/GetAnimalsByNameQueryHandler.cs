@@ -13,8 +13,9 @@ internal class GetAnimalsByNameQueryHandler(IAnimalsDataProvider animalsDataProv
         var animals = await animalsDataProvider.GetAll();
 
         var result = animals
-            .Where(a => a.Name.Contains(request.Name))
-            .Select(a => new AnimalByNameDto(a.Id ,a.Name, a.Age))
+            .Where(animal => animal.Name.Contains(request.Name))
+            .OrderBy(animal => animal.Name)
+            .Select(animal => new AnimalByNameDto(animal.Id ,animal.Name, animal.Age))
             .ToArray();
         var count = result.Length;
 
